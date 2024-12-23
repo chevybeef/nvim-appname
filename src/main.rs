@@ -61,11 +61,11 @@ fn confirm_and_execute(op: &str, from: &[PathBuf], to: &[PathBuf]) -> Result<()>
         print_directories(to);
     }
 
-    if confirmed() {
-        execute(op, from, to)?;
+    if !confirmed() {
+        return Err(anyhow!("Operation cancelled"));
     }
 
-    Ok(())
+    Ok(execute(op, from, to)?)
 }
 
 fn print_directories(dirs: &[PathBuf]) {
