@@ -1,4 +1,4 @@
-# Manipulate the nvim APPNAME directories in a single atomic operation
+### Manipulate the nvim APPNAME directories in a single atomic operation
 
 `Usage: nvim-appname --operation <OPERATION> --extension <EXTENSION>`
 
