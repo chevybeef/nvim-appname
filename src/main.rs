@@ -5,7 +5,7 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::{fs, io};
 
-/// Simple program to move the nvim XDG directories
+/// Manipulate the nvim APPNAME directories in a single atomic operation
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Cli {
