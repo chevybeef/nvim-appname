@@ -1,6 +1,6 @@
 use anyhow::{anyhow, Ok, Result};
 use clap::Parser;
-use std::env::var;
+use env_home::env_home_dir as home_dir;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::{fs, io};
