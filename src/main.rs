@@ -20,17 +20,28 @@ struct Cli {
 fn main() -> Result<()> {
     let args = Cli::parse();
 
-    let xdg_paths = [
-        "/.config/nvim",
-        "/.local/share/nvim",
-        "/.local/state/nvim",
-        "/.cache/nvim",
-    ];
+    let appname_paths;
+    #[cfg(windows)]
+    {
+        xdg_paths = [r"\AppData\Local\nvim", r"\AppData\Local\nvim-data"];
+    }
+    #[cfg(unix)]
+    {
+        appname_paths = [
+            "/.config/nvim",
+            "/.local/share/nvim",
+            "/.local/state/nvim",
+            "/.cache/nvim",
+        ];
+    };
 
-    let home = var("HOME")?;
+    // intentionally panics if home directory can't be found
+    let home = home_dir().unwrap();
     let mut directories: Vec<PathBuf> = vec![];
-    for item in &xdg_paths {
-        directories.push((home.clone() + item).into());
+    for item in appname_paths {
+        let mut path = home.clone();
+        path.push(item);
+        directories.push(path);
     }
 
     let op = &args.operation;
