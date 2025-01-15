@@ -64,6 +64,7 @@ fn main() -> Result<()> {
     Ok(confirm_and_execute(op, &from, &to)?)
 }
 
+// get confirmation and then exectute the operation
 fn confirm_and_execute(op: &str, from: &[PathBuf], to: &[PathBuf]) -> Result<()> {
     println!("This operation will {op} these directories:");
     print_directories(from);
@@ -79,12 +80,14 @@ fn confirm_and_execute(op: &str, from: &[PathBuf], to: &[PathBuf]) -> Result<()>
     Ok(execute(op, from, to)?)
 }
 
+// print out the directories affected by the operation
 fn print_directories(dirs: &[PathBuf]) {
     dirs.iter().for_each(|d| {
         println!("{d:?}");
     });
 }
 
+// get the final confirmation before executing the operation
 fn confirmed() -> bool {
     print!("Are you sure? [y/N] ");
     let _ = io::stdout().flush();
@@ -96,6 +99,7 @@ fn confirmed() -> bool {
     answer.trim() == "y"
 }
 
+// execute the operation from source to destination or delete
 fn execute(op: &str, from: &[PathBuf], to: &[PathBuf]) -> Result<()> {
     for (from, to) in from.iter().zip(to.iter()) {
         if op == "move" || op == "restore" {
