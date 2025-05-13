@@ -103,11 +103,23 @@ fn confirmed() -> bool {
 fn execute(op: &str, from: &[PathBuf], to: &[PathBuf]) -> Result<()> {
     for (from, to) in from.iter().zip(to.iter()) {
         if op == "move" || op == "restore" {
-            fs::rename(from, to)?;
+            if fs::exists(from)? {
+                fs::rename(from, to)?;
+            } else {
+                println!("{from:?} doesn't exists, skipping rename");
+            }
         } else if op == "create" {
-            fs::create_dir(from)?;
+            if !fs::exists(from)? {
+                fs::create_dir(from)?;
+            } else {
+                println!("{from:?} already exists, skipping create");
+            }
         } else if op == "delete" {
-            fs::remove_dir_all(from)?;
+            if fs::exists(from)? {
+                fs::remove_dir_all(from)?;
+            } else {
+                println!("{from:?} doesn't exists, skipping delete");
+            }
         }
     }
 
