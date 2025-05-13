@@ -28,10 +28,10 @@ fn main() -> Result<()> {
     #[cfg(unix)]
     {
         appname_paths = [
-            "/.config/nvim",
-            "/.local/share/nvim",
-            "/.local/state/nvim",
-            "/.cache/nvim",
+            ".config/nvim",
+            ".local/share/nvim",
+            ".local/state/nvim",
+            ".cache/nvim",
         ];
     };
 
